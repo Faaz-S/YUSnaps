@@ -16,3 +16,6 @@ Scalability: SVG images can be scaled to any size without losing quality. This i
 Vector Graphics: SVG is based on vector graphics, which use mathematical equations to define shapes and paths. This makes SVG files smaller in size compared to raster images, and they can be edited and manipulated more easily.
 
 Text-Based: SVG files are plain text files, often written in XML (eXtensible Markup Language). This makes them human-readable and allows developers to create or modify them using a simple text editor.
+
+InputGroup imported from chakra for input line below comments
+Skeleton imported from chakra to show a loading state of a component
