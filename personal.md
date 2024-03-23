@@ -19,3 +19,10 @@ Text-Based: SVG files are plain text files, often written in XML (eXtensible Mar
 
 InputGroup imported from chakra for input line below comments
 Skeleton imported from chakra to show a loading state of a component
+
+# Firebase
+
+- it is a backend as a service by Google [eliminates the need for servers or databases]
+- Zustand is a small unopinionated state management library built by Jotai and React-spring. It has a comfy API based on hooks, and isn't opinionated.
+
+- we also used Toast from chakra
