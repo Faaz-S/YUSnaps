@@ -14,7 +14,6 @@ import useAuthStore from "../store/authStore";
 const useSignUpWithEmailAndPassword = () => {
   const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-
   const showToast = useShowToast();
   const loginUser = useAuthStore((state) => state.login);
 
@@ -30,6 +29,7 @@ const useSignUpWithEmailAndPassword = () => {
     }
 
     const usersRef = collection(firestore, "users");
+
     const q = query(usersRef, where("username", "==", inputs.username));
     const querySnapshot = await getDocs(q);
 
@@ -37,6 +37,7 @@ const useSignUpWithEmailAndPassword = () => {
       showToast("Error", "Username already exists", "error");
       return;
     }
+
     try {
       const newUser = await createUserWithEmailAndPassword(
         inputs.email,
@@ -59,13 +60,12 @@ const useSignUpWithEmailAndPassword = () => {
           posts: [],
           createdAt: Date.now(),
         };
-        // adding new user to the firestore
         await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
         localStorage.setItem("user-info", JSON.stringify(userDoc));
         loginUser(userDoc);
       }
     } catch (error) {
-      console.log(error);
+      showToast("Error", error.message, "error");
     }
   };
 

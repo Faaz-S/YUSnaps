@@ -10,12 +10,11 @@ import Navbar from "../../components/Navbar/Navbar";
 const PageLayout = ({ children }) => {
   const { pathname } = useLocation();
   const [user, loading] = useAuthState(auth);
-  // pathname not equal to auth page and the user no logged in
   const canRenderSidebar = pathname !== "/auth" && user;
-
   const canRenderNavbar = !user && !loading && pathname !== "/auth";
 
   const checkingUserIsAuth = !user && loading;
+  // If user is logged in
   if (checkingUserIsAuth) return <PageLayoutSpinner />;
 
   return (
@@ -29,7 +28,6 @@ const PageLayout = ({ children }) => {
       {/* Navbar */}
       {canRenderNavbar ? <Navbar /> : null}
       {/* the page content on the right */}
-
       <Box
         flex={1}
         w={{ base: "calc(100% - 70px)", md: "calc(100% - 240px)" }}

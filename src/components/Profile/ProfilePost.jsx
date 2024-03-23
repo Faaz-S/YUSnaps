@@ -19,9 +19,49 @@ import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
+import useUserProfileStore from "../../store/userProfileStore";
+import useAuthStore from "../../store/authStore";
+import useShowToast from "../../hooks/useShowToast";
+import { useState } from "react";
+import { deleteObject, ref } from "firebase/storage";
+import { firestore, storage } from "../../firebase/firebase";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import usePostStore from "../../store/postStore";
+import Caption from "../Comment/Caption";
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const userProfile = useUserProfileStore((state) => state.userProfile);
+  const authUser = useAuthStore((state) => state.user);
+  const showToast = useShowToast();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const deletePost = usePostStore((state) => state.deletePost);
+  const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
+
+  const handleDeletePost = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    if (isDeleting) return;
+
+    try {
+      const imageRef = ref(storage, `posts/${post.id}`);
+      await deleteObject(imageRef);
+      const userRef = doc(firestore, "users", authUser.uid);
+      await deleteDoc(doc(firestore, "posts", post.id));
+
+      await updateDoc(userRef, {
+        posts: arrayRemove(post.id),
+      });
+
+      deletePost(post.id);
+      decrementPostsCount(post.id);
+      showToast("Success", "Post deleted successfully", "success");
+    } catch (error) {
+      showToast("Error", error.message, "error");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <>
       <GridItem
@@ -49,23 +89,23 @@ const ProfilePost = ({ img }) => {
         >
           <Flex alignItems={"center"} justifyContent={"center"} gap={50}>
             <Flex>
-              {" "}
               <AiFillHeart size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                7{/* {post.likes.length} */}
+                {post.likes.length}
               </Text>
             </Flex>
+
             <Flex>
               <FaComment size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                7{/* {post.comments.length} */}
+                {post.comments.length}
               </Text>
             </Flex>
           </Flex>
         </Flex>
+
         <Image
-          src={img}
-          // src={post.imageURL}
+          src={post.imageURL}
           alt="profile post"
           w={"100%"}
           h={"100%"}
@@ -99,11 +139,7 @@ const ProfilePost = ({ img }) => {
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Image
-                  // src={post.imageURL}
-                  src={img}
-                  alt="profile post"
-                />
+                <Image src={post.imageURL} alt="profile post" />
               </Flex>
               <Flex
                 flex={1}
@@ -114,30 +150,28 @@ const ProfilePost = ({ img }) => {
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                   <Flex alignItems={"center"} gap={4}>
                     <Avatar
-                      //   src={userProfile.profilePicURL}
-                      src="/profilepic.png"
+                      src={userProfile.profilePicURL}
                       size={"sm"}
                       name="As a Programmer"
                     />
                     <Text fontWeight={"bold"} fontSize={12}>
-                      {/* {userProfile.username} */}
-                      Fsherwani
+                      {userProfile.username}
                     </Text>
                   </Flex>
 
-                  {/* {authUser?.uid === userProfile.uid && ( */}
-                  <Button
-                    size={"sm"}
-                    bg={"transparent"}
-                    _hover={{ bg: "whiteAlpha.300", color: "red.600" }}
-                    borderRadius={4}
-                    p={1}
-                    // onClick={handleDeletePost}
-                    // isLoading={isDeleting}
-                  >
-                    <MdDelete size={20} cursor="pointer" />
-                  </Button>
-                  {/* )} */}
+                  {authUser?.uid === userProfile.uid && (
+                    <Button
+                      size={"sm"}
+                      bg={"transparent"}
+                      _hover={{ bg: "whiteAlpha.300", color: "red.600" }}
+                      borderRadius={4}
+                      p={1}
+                      onClick={handleDeletePost}
+                      isLoading={isDeleting}
+                    >
+                      <MdDelete size={20} cursor="pointer" />
+                    </Button>
+                  )}
                 </Flex>
                 <Divider my={4} bg={"gray.500"} />
 
@@ -147,37 +181,16 @@ const ProfilePost = ({ img }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
-                  {/* CAPTION
+                  {/* CAPTION */}
                   {post.caption && <Caption post={post} />}
                   {/* COMMENTS */}
-                  {/* {post.comments.map((comment) => (
+                  {post.comments.map((comment) => (
                     <Comment key={comment.id} comment={comment} />
-                  ))}  */}
-                  <Comment
-                    createdAt="1d ago"
-                    username="asaprogrammer_"
-                    profilePic={"/profilepic.png"}
-                    text={"nice pic"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="abrahmov"
-                    profilePic={"https://bit.ly/dan-abramov"}
-                    text={"lol"}
-                  />
-                  <Comment
-                    createdAt="3h ago"
-                    username="asaprogrammer_"
-                    profilePic={"https://bit.ly/dan-abramov"}
-                    text={"Good clone dude"}
-                  />
+                  ))}
                 </VStack>
                 <Divider my={4} bg={"gray.8000"} />
 
-                <PostFooter
-                  isProfilePage={true}
-                  //  post={post}
-                />
+                <PostFooter isProfilePage={true} post={post} />
               </Flex>
             </Flex>
           </ModalBody>

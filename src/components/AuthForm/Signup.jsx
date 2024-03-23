@@ -17,40 +17,34 @@ const Signup = () => {
     email: "",
     password: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
   const { loading, error, signup } = useSignUpWithEmailAndPassword();
+
   return (
     <>
       <Input
         placeholder="Email"
-        color="yellow"
-        _placeholder={{ opacity: 2, color: "inherit" }}
-        focusBorderColor="pink.400"
         fontSize={14}
         type="email"
+        color="teal"
         size={"sm"}
         value={inputs.email}
         onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
       />
       <Input
         placeholder="Username"
-        color="yellow"
-        _placeholder={{ opacity: 2, color: "inherit" }}
-        focusBorderColor="pink.400"
         fontSize={14}
         type="text"
+        color="teal"
         size={"sm"}
         value={inputs.username}
         onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
       />
       <Input
         placeholder="Full Name"
-        color="yellow"
-        _placeholder={{ opacity: 2, color: "inherit" }}
-        focusBorderColor="pink.400"
         fontSize={14}
         type="text"
+        color="teal"
         size={"sm"}
         value={inputs.fullName}
         onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
@@ -58,11 +52,9 @@ const Signup = () => {
       <InputGroup>
         <Input
           placeholder="Password"
-          focusBorderColor="pink.400"
-          color="yellow"
-          _placeholder={{ opacity: 2, color: "inherit" }}
           fontSize={14}
           type={showPassword ? "text" : "password"}
+          color="teal"
           value={inputs.password}
           size={"sm"}
           onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
@@ -75,20 +67,22 @@ const Signup = () => {
           >
             {showPassword ? <ViewIcon /> : <ViewOffIcon />}
           </Button>
-        </InputRightElement>{" "}
+        </InputRightElement>
       </InputGroup>
+
       {error && (
         <Alert status="error" fontSize={13} p={2} borderRadius={4}>
           <AlertIcon fontSize={12} />
           {error.message}
         </Alert>
       )}
+
       <Button
         w={"full"}
-        isLoading={loading}
         colorScheme="teal"
         size={"sm"}
         fontSize={14}
+        isLoading={loading}
         onClick={() => signup(inputs)}
       >
         Sign Up

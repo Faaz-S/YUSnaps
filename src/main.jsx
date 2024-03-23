@@ -8,7 +8,6 @@ import { mode } from "@chakra-ui/theme-tools";
 import { BrowserRouter } from "react-router-dom";
 
 const styles = {
-  // props contains the information about the current theme so that the bg can be dynamically set based on the current system theme
   global: (props) => ({
     body: {
       bg: mode("gray.100", "#000")(props),
@@ -16,7 +15,7 @@ const styles = {
     },
   }),
 };
-//  Adding color mode config
+
 const config = {
   initialColorMode: "dark",
   useSystemColorMode: false,
