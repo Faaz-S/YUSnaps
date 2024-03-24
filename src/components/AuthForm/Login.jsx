@@ -26,7 +26,7 @@ const Login = () => {
         type="password"
         value={inputs.password}
         color="teal"
-        placeholderTextColor="red"
+        
         onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
       />
       {error && (
