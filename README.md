@@ -1,6 +1,6 @@
 # YU SNAPS
 
-YU Snaps (York University Snaps) is a web application built using React, Firebase for authentication, and storage. This project aims to provide York University students with a platform to share and discover snapshots of campus life. Visit the website [here](https://yu-snaps.vercel.app){:target="_blank"}
+YU Snaps (York University Snaps) is a web application built using React, Firebase for authentication, and storage. This project aims to provide York University students with a platform to share and discover snapshots of campus life. Visit the website [here](https://yu-snaps.vercel.app)
 
 # Features
 
