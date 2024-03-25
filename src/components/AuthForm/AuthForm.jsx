@@ -9,9 +9,15 @@ const AuthForm = () => {
 
   return (
     <>
-      <Box border={"1px solid gray"} borderRadius={4} padding={5}>
+      <Box border={"1px solid gray"} borderRadius={4} padding={4}>
         <VStack spacing={4}>
-          <Image src="/logo.png" h={24} cursor={"pointer"} alt="YU SNAPS" />
+          <Image
+            src="/logo1.png"
+            h={200}
+            borderRadius={10}
+            cursor={"pointer"}
+            alt="YU SNAPS"
+          />
 
           {isLogin ? <Login /> : <Signup />}
 

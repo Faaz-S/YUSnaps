@@ -8,7 +8,7 @@ const AuthPage = () => {
         <Flex justifyContent={"center"} alignItems={"center"} gap={10}>
           {/* Left hand-side */}
           <Box display={{ base: "none", md: "block" }}>
-            <Image src="/YUSnapsLogo.png" h={450} alt="logo image" />
+            <Image src="myPic.png" h={400} alt="logo image" />
           </Box>
 
           {/* Right hand-side */}
