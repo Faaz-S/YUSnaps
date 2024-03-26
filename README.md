@@ -21,7 +21,7 @@ Chakra-UI: Provides simple, modular and accessible component library
 # Getting Started
 
 To run the YU Snaps application locally, follow these steps:
-1. Clone the repository: git clone https://github.com/your-username/yu-snaps.git
+1. Clone the repository: git clone 
 2. Navigate to the project directory: cd yu-snaps
 3. Install dependencies: use npm
 4. Set up Firebase: Create a Firebase project on the Firebase Console.
