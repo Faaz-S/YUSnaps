@@ -36,8 +36,9 @@ const FeedPosts = () => {
         posts.map((post) => <FeedPost key={post.id} post={post} />)}
       {!isLoading && posts.length === 0 && (
         <>
-          <Text fontSize={"md"} color={"red.400"}>
-            Dayuum. Looks like you don&apos;t have any friends.
+          <Text fontSize={"md"} color={"purple.600"}>
+            Hey there, seems like your friend list is empty.Time to upgrade your
+            social circle from 404 to 200 OK!
           </Text>
           <Text color={"red.400"}>Stop coding and go make some!!</Text>
         </>
